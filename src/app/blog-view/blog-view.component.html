@@ -1,0 +1,12 @@
+<div class="col-xs-12">
+  <h2>Mon Blog</h2>
+  <ul class="list-group">
+    <app-blogs *ngFor="let blog of blogs ; let i = index"
+     [indexOfBlog]="i" 
+     [blog]="blog"
+     [blogTitre]="blog.title" 
+     [blogIsLikes]="blog.loveIts" 
+     [blogContent]="blog.content"
+     [dateCreation]="blog.created_at"></app-blogs>
+  </ul>
+</div>

@@ -1,32 +1,52 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { BlogsService } from '../services/blogs.service';
+import { Blog } from './blog';
+
 
 @Component({
   selector: 'app-blogs',
   templateUrl: './blogs.component.html',
   styleUrls: ['./blogs.component.css']
 })
-export class BlogsComponent {
+export class BlogsComponent implements OnInit {
 
-  constructor() { }
-  @Input() blogTitle: string;
-  @Input() blogContent : string;
-  @Input() blogLike : number = 0 ;
-  @Input() dateCreation: Date;
+  @Input()  blogTitre: string;
+  @Input()  blogContent: string;
+  @Input() blogIsLikes: number;
+  @Input() indexOfBlog : number;
+  @Input() id: number;
+  @Input() dateCreation : Date;
+  @Input() blog : Blog;
+
+  constructor(private blogsService: BlogsService) { }
+
+  
+ngOnInit(){
+}
+getStatus() {
+  return this.blogIsLikes;
+}
+
 
   setLike(){
-    this.blogLike +=1 ;
-    return this.blogLike;
+    this.blogsService.LikeOne(this.indexOfBlog);
   }
-  setDislike(){
-    this.blogLike -=1;
-    return this.blogLike;
+  setDislike(index: number){
+   this.blogsService.DislikeOne(this.indexOfBlog);
   }
-
   getColor() {
-    if(this.blogLike > 0) {
-      return 'green';
-    } else if(this.blogLike <0 ) {
-      return 'red';
+    
+        if (this.blogIsLikes > 0)
+        return  'green';
+
+        else if (this.blogIsLikes < 0)
+        return 'red';
+    }
+
+    onDeleteBlog(blog: Blog){
+
+      this.blogsService.removeBlog(blog);
+
     }
 
 
